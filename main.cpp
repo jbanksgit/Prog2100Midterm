@@ -13,32 +13,24 @@ int checkSign(int inpu) {
     return 0;
 }
 
-void computeTimeDifference(int h, int m, int s, int eh, int em, int es) {
-    //--------------------------------------------------------//
-    int newSeconds = s - es;
-    /*int carrySeconds = 0;
-    if(checkSign(newSeconds) == -1){
-        carrySeconds = 1;
-        newSeconds = newSeconds + 60;
-    }*/
-    //--------------------------------------------------------//
-    int newMinutes = m - em;
-    /*newMinutes -= (carrySeconds * 60);
-    int carryMinutes = 0;
-    if(checkSign(newMinutes) == -1){
-        carryMinutes = 1;
-        newMinutes =  newMinutes + 60;
-    }*/
-    //--------------------------------------------------------//
-    int newHours = h - eh;
-    /*newHours -= carryMinutes;
-    int carryHours = 0;
-    if(checkSign(newHours) == -1){
-        carryHours = 1;
-        newHours = newHours + 24;
-    }*/
-    //--------------------------------------------------------//
-    cout << "Time difference: " << newHours << ":" << newMinutes << ":" << newSeconds << "\n";
+struct timeLad{
+    int hours;
+    int minutes;
+    int seconds;
+    timeLad(int h, int m, int s){
+        hours = h;
+        minutes = m;
+        seconds = s;
+    }
+};
+
+void computeTimeDifference(timeLad t1, timeLad t2) {
+    timeLad * newTime = new timeLad(
+            t1.hours - t2.hours,
+            t1.minutes - t2.minutes,
+            t1.seconds - t2.seconds
+            );
+    cout << "Time difference: " << newTime->hours << ":" << newTime->minutes << ":" << newTime->seconds << "\n";
 }
 
 
@@ -92,8 +84,9 @@ int main() {
 
     cout << "Your start time: " << hours << ":" << minutes << ":" << seconds << "\n";
     cout << "Your end time: " << endHours << ":" << endMinutes << ":" << endSeconds << "\n";
-
-    computeTimeDifference(hours, minutes, seconds, endHours, endMinutes, endSeconds);
+    timeLad * t1 = new timeLad(hours,minutes,seconds);
+    timeLad * t2 = new timeLad(endHours,endMinutes,endSeconds);
+    computeTimeDifference(*t1,*t2);
 
     return 0;
 }
